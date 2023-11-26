@@ -2,6 +2,7 @@ const btnDivs = document.getElementById("btns");
 const productDivs = document.getElementById("products");
 const searchInput = document.getElementById("searchInput");
 const categoryTitle = document.getElementById("category");
+const canvasBody = document.querySelector(".offcanvas-body");
 
 const modalBody = document.querySelector(".modal-body");
 const btnColors = [
@@ -73,7 +74,7 @@ function displayProducts(arr) {
     const { id, title, description, price, image } = item;
     const productDiv = document.createElement("div");
     productDiv.classList.add("col");
-    productDiv.setAttribute("id",id);
+    productDiv.setAttribute("id", id);
     productDiv.innerHTML = ` <div class="card">
             <img src="${image}" class="p-2" height="250px" alt="...">
             <div class="card-body">
@@ -93,6 +94,40 @@ function displayProducts(arr) {
                 </button>
             </div>
           </div>`;
-          productDivs.appendChild(productDiv)
+    productDiv.addEventListener("click", (e) => {
+      if (e.target.classList.contains("btn-danger")) {
+        addToCart(item);
+      }
+    });
+    productDivs.appendChild(productDiv);
   });
 }
+
+//!Ürünleri sepete ekleme fonksiyonu
+
+function addToCart(product) {
+  console.log(product);
+  if (baskets.some((item) => item.title === product.title)) {
+    baskets = baskets.map((item) => {
+      return item.id === product.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item;
+    });
+  } else {
+    baskets.push(product);
+  }
+  console.log(baskets);
+
+}
+
+//!butonlardan gelecek olan bilgileri yakalama
+
+btnDivs.addEventListener("click",(e)=>{
+  if(e.target.classList.contains("btn")){
+    const selectedCategory=e.target.innerText.toLowerCase()
+    categoryTitle.innerText=selectedCategory.toUpperCase()
+    const value= searchInput.value
+    const filteredProducts= selectedCategory==="all"? products : products.filter(item=>item.category.toLowerCase()===selectedCategory && item.title.toLowerCase().includes(value.toLowerCase()))
+    displayProducts(filteredProducts)
+  }
+})
