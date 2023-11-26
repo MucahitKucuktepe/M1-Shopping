@@ -97,6 +97,8 @@ function displayProducts(arr) {
     productDiv.addEventListener("click", (e) => {
       if (e.target.classList.contains("btn-danger")) {
         addToCart(item);
+      }else if(e.target.classList.contains("btn-primary")){
+        showModal(item)
       }
     });
     productDivs.appendChild(productDiv);
@@ -157,4 +159,31 @@ function filtered (selectedCategory,value){
             item.title.toLowerCase().includes(value.toLowerCase())
         );
         return newArr
+}
+
+//! modal body yi olusturma
+
+function showModal (product){
+      fetch(`https://anthonyfs.pythonanywhere.com/api/products/${product.id}`)
+        .then((res) => res.json())
+        .then((res) => {
+          modalBody.innerHTML = `<div class="text-center">
+              <img src="${res.image}" class="p-2" height="250px" alt="...">
+              <h5 class="card-title">${res.title}</h5>
+              <p class="card-text">${res.description}</p>
+              <p class="card-text">Fiyat: ${res.price} $</p>
+              </div>
+              `;
+        });
+
+  // const{image,title,description,price}=product
+  // modalBody.innerHTML = `
+  // <div class="text-center">
+  //   <img src="${image}" class="p-2" height="250px" alt="...">
+  //   <h5 class="card-title">${title}</h5>
+  //   <p class="card-text">${description}</p>
+  //   <p class="card-text">Fiyat: ${price} $</p>
+  //   </div>
+  
+  // `;
 }
