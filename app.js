@@ -309,15 +309,16 @@ canvasBody.addEventListener("click", (e) => {
   if (e.target.classList.contains("fa-plus")) {
     e.target.closest(".card-body").querySelector("#adet").innerText++;
     e.target.previousElementSibling.innerText++;
+    sepet.innerText++;
     const title = e.target
       .closest(".card-body")
       .querySelector(".card-title").innerText;
     // console.log(title);
-    sepet.innerText++;
+
     const filteredProduct = baskets.filter((product) => product.title == title);
     addToCart(filteredProduct[0]);
     console.log(baskets);
-    // console.log(filteredProduct);
+    console.log(filteredProduct[0]);
     calculateProductPrice(e.target);
     calculateTotalPrice();
   } else if (e.target.classList.contains("fa-minus")) {
@@ -347,6 +348,10 @@ canvasBody.addEventListener("click", (e) => {
     console.log(filteredProduct[0]);
     baskets = baskets.filter((item) => item !== filteredProduct[0]);
     calculateTotalPrice();
+    sepet.innerText = baskets.reduce(
+      (acc, product) => acc + product.quantity,
+      0
+    );
   }
 });
 
