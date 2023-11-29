@@ -367,7 +367,7 @@ const calculateProductPrice = (btn) => {
   console.log(totalPrice);
   console.log(totalAdet);
   console.log(productprice);
-  totalPrice.textContent = (totalAdet * productprice).toFixed(2) + "$";
+  totalPrice.textContent = (totalAdet * productprice).toFixed(2) +  "$";
 };
 //! TOPLAM SEPET TUTARINI HESAPLAMA
 const calculateTotalPrice = () => {
